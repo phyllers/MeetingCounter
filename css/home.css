@@ -1,0 +1,73 @@
+body {
+	background-color: #FFEAB6;
+/*	width: 940px; */
+	font-family: Helvetica, Arial;
+	text-align: center;
+	display:block;
+	margin: auto;
+	text-decoration: none;
+	font-size: 20px;
+	padding: 0px;
+}
+
+h1 {
+	padding-top: 15px;
+	font-size: 24px;
+}
+
+#starterInfo {
+	display: block;
+	text-align: center;
+	
+}
+table {
+	
+	margin: auto;
+	
+}
+
+td {
+	text-align: left;
+	vertical-align: middle;
+	margin: 0px;
+}
+.start, .end {
+	width: 200px;
+	height: 55px;
+	font-size: 18px;
+	border-radius: 5px;
+	margin: 20px;
+}
+
+.resultContainer {
+	font-size: 50px;
+	line-height: 50px;
+	font-weight: bold;
+	width: 100%;
+	color: #ff3030;
+	display: inline-block;
+}
+
+.dollaDollaDollaBillsYall {
+	display: inherit;
+}
+
+.results {
+	display:inherit;
+}
+
+#saveButton {
+	color: black;
+}
+#saveButton:hover {
+	color: grey;
+	cursor: pointer;
+}
+
+#meetingList ul {
+	list-style: none;
+}
+
+#meetingList li { 
+	/*text-align: left;*/
+}

@@ -1,0 +1,30 @@
+{
+  "name": "meetingCounter",
+  "version": "0.0.1",
+  "description": "Counts the cost of a meeting.",
+  "keywords": [
+    "cost",
+    "meeting"
+  ],
+  "author": {
+    "name": "Phyliss Lee",
+    "email": "plee@stjosephcontent.com",
+    "url":  ""
+  },
+
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+
+  "dependencies": {
+  	"express": "*",
+  	"connect": "*",
+  	"mongoose": "*"
+  },
+  "devDependencies": {},
+  "bundleDependencies": [],
+
+  "private": true,
+  "main": "server.js"
+}

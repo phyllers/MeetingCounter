@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>How Much!?</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+		<link rel="stylesheet" href="css/home.css" type="text/css" /> 
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			"use strict";
+						
+			$(document).ready(function() {
+				var timer;
+				$('.end').hide();
+				$('.resultContainer').hide()
+				$('#saveButton').hide();
+				$('.start').on('click', function() {
+					$('.start').hide();
+					$('.end').show();
+					$('.resultContainer').show();
+					var hourly = ($('#hourlyWage').val() * $('#numPeople').val()) / 3600 //3600 seconds per hour;
+					
+					var startTime = new Date();
+					
+					timer = setInterval(function() {
+						var curTime = new Date();
+						var diff = (curTime.getTime() - startTime.getTime()) / 1000;
+						$('.results').html((diff * hourly).toFixed(2));
+					}, 1000);
+				});
+				
+				$('.end').on('click', function() {
+					$('.start').show();
+					$('#saveButton').show();
+					$('.end').hide();
+					clearInterval(timer);
+				});
+				
+				$('#saveButton').on('click', function() {
+					$.post('/saveData', {'cost': $('.results').html(), endDate: new Date()}, function(res) {
+							alert("Data Saved!\n");
+							$('#saveButton').hide();
+					});
+				});
+				
+				$('#listMeetings').on('click', function() {
+					$.get('/listMeetings', {}, function(res) { 
+						//alert("Data GoT!\n" + res);
+						$('#meetingList').html(res);
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row-fluid span9"><h1>How much does this meeting cost?</h1></div>
+			<div id="starterInfo" class="row-fluid span9">
+				<table>
+					<tr>
+						<td>Average Hourly Wage: </td>
+						<td><input type="text" id="hourlyWage" /></td>
+					</tr>
+					<tr>
+						<td>Number of People: </td>
+						<td><input type="text" id="numPeople" /></td>
+					</tr>
+				</table>
+			</div>
+			<button class="start row-fluid">Start</button>
+			<button class="end row-fluid">End</button>
+			<div class="resultContainer">
+				<div class="dollaDollaDollaBillsYall">$</div>
+				<div class="results"></div>
+				<i id="saveButton" class="icon-save"></i> 	
+			</div>
+			<button id="listMeetings">Show list of Meetings?</button>
+			<div id="meetingList" class=""></div>
+		</div>
+	</body>
+</html>
