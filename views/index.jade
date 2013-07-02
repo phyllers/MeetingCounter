@@ -1,0 +1,78 @@
+extends layout
+
+block append headContent
+	script.
+		$(document).ready(function() {
+			var timer;
+			$('.end').hide();
+			$('#saveButton').hide();
+			$('.resultContainer').hide();
+			$('#meetingNameForm').hide();
+			
+			$('.start').on('click', function() {
+				$('.start').hide();
+				$('.end').show();
+				$('.resultContainer').show();
+				var hourly = ($('#hourly').val() * $('#people').val()) / 3600 //3600 seconds per hour;
+				
+				var startTime = new Date();
+				
+				timer = setInterval(function() {
+					var curTime = new Date();
+					var diff = (curTime.getTime() - startTime.getTime()) / 1000;
+					$('#count').html((diff * hourly).toFixed(2));
+				}, 1000);
+			});
+			$('.end').on('click', function() {
+				$('.start').show();
+				$('#saveButton').show();
+				$('.end').hide();
+				clearInterval(timer);
+			});
+			
+			$('#saveButton').on('click', function() {
+				$('#meetingNameForm').show();
+
+			});
+			
+			$('#meetingNameForm').submit(function() {
+				$.post('/meetings', {"cost": $('#count').html(), "name": $('#meetingName').val(), "endDate": new Date()}, function(res) {
+					alert("Data Saved!\n");
+					$('#saveButton').hide();
+					$('#meetingNameForm').hide();
+				});
+				return false;
+			});
+			
+			$('#listMeetings').on('click', function() {
+				var url = window.location.origin + '/meetinglist';
+				window.location = '/meetinglist';
+				return false;
+			});
+		})
+		
+
+block content
+	h1 How much does this meeting cost?
+	form(id="inputForm")
+		span Average Hourly Wage:
+		input(id="hourly", type="number")
+		br
+		span Number of People Attending:
+		input(id="people", type="number")
+		br
+	button(class="start")
+		span Start
+	button(class="end")
+		span End
+	.resultContainer
+		span $
+		#count 0.00
+		i(id="saveButton", class="icon-save")
+		form(id="meetingNameForm")
+			span Enter Meeting Name: 
+			input(id="meetingName", type="text")
+			input(type="submit")
+	button(id="listMeetings")
+		span List Meetings
+	include meetinglist

@@ -1,0 +1,6 @@
+
+block meetinglist
+	if (meetingList)
+		ul
+			each item in meetingList
+				li #{item.name} : $#{item.cost} : #{item.endDate}
